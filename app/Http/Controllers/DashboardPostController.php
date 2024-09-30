@@ -18,11 +18,12 @@ class DashboardPostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(20);
+        $user = Auth::user();
+        $posts = Post::where('author_id', $user->id)->paginate(20);
         $category = Category::all();
         return view('pages.dashboard.posts.index', compact('posts', 'category'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
