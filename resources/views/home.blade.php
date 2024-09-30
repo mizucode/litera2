@@ -91,7 +91,7 @@
                         <div class="mt-6 w-full lg:flex
                          lg:gap-4">
 
-                            <a href="/register"
+                            <a href="/login"
                                 class="text-white font-bold border-b-4 bg-dasar hover:bg-blue-500 hover:scale-95 transition-transform transform lg:w-48 w-full duration-300 lg:py-4 py-3 flex items-center justify-center text-center rounded-xl">
                                 Login
                             </a>

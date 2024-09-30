@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Storage;
 
 
 class DashboardPostController extends Controller
@@ -18,6 +20,7 @@ class DashboardPostController extends Controller
 
         return view('pages.dashboard.posts.index', [
             'posts' => Post::where('author_id', auth()->user()->author_id)->get()
+
         ]);
     }
 
@@ -36,7 +39,21 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'slug' => 'required|unique:posts',
+            'image' => 'image|file|max:1024',
+            'body' => 'required',
+        ]);
+
+
+        $validatedData['category_id'] = (int) $request->category_id;
+        $validatedData['author_id'] = auth()->user()->id;
+
+        Post::create($validatedData);
+
+        return redirect('/dashboard/posts')->with('success', 'New post has been added!');
     }
 
     /**
@@ -44,7 +61,7 @@ class DashboardPostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post;
     }
 
     /**

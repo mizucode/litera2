@@ -23,7 +23,7 @@
                 <p class="mb-6 text-gray-500 dark:text-gray-400">Lihat aktivitas terbaru Anda dan tetap terinformasi
                     dengan data terbaru yang ditampilkan di sini. Jangan ragu untuk menjelajahi fitur-fitur yang
                     tersedia</p>
-                <a href="#"
+                <a href="/dashboard/posts/create"
                     class="inline-flex items-center justify-center rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                     Tulis Laporan </a>
             </div>
