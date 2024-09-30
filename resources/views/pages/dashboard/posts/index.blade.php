@@ -27,7 +27,13 @@
                                     <th scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $post->title }}</th>
-                                    <td class="px-4 py-3">{{ $post->category }}</td>
+                                    <td class="px-4 py-3">
+                                        @foreach ($category as $item)
+                                            @if ( $post->category_id == $item->id)
+                                                {{$item->name}}
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td class="px-4 py-3 "><a href="/dashboard/posts/{{ $post->id }}">Detail</a>
                                     </td>
                                     <td class="px-4 py-3 ">{{ $post->status }}</td>

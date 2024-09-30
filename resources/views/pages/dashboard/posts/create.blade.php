@@ -2,7 +2,7 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Tambahkan Laporan</h2>
-            <form action="/dashboard/posts" method="post">
+            <form action="/dashboard/posts" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
@@ -59,7 +59,7 @@
                                             <p class="text-xs pb-10 text-gray-500 dark:text-gray-400">PNG atau JPG (Max
                                                 2MB)</p>
                                 </div>
-                                <input id="dropzone-file" type="file" class="hidden" />
+                                <input id="dropzone-file" name="image" type="file" class="hidden" />
                             </label>
                         </div>
                     </div>
