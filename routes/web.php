@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DashboardPostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardPostController;
+use App\Http\Controllers\DashboardDeletePostController;
+
 
 
 
@@ -21,7 +23,7 @@ Route::get('/contact', function () {
     return view('contact', ['title' => 'contact']);
 });
 
-Route::get('/posts', [PostController::class, 'showAll']);
+// Route::get('/posts', [PostController::class, 'showAll']);
 Route::get('/posts/{post:slug}', [PostController::class, 'showSinglePost']);
 Route::get('/authors/{user:username}', [PostController::class, 'authorPost']);
 Route::get('/categories/{category:slug}', [PostController::class, 'showAllCategories']);
@@ -38,5 +40,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::post('/logout', [LoginController::class, 'logout']);
     Route::resource('/dashboard/posts', DashboardPostController::class);
+
+    Route::get('/dashboard/posts/{post:slug}', [PostController::class, 'showSinglePost']);
     Route::get('/dashboard/post/checkSlug', [DashboardPostController::class, 'checkSlug']);
 });
+
+Route::middleware(['isAdmin'])->group(function () {
+    Route::get('/posts', [PostController::class, 'showAll']);
+
+    Route::get('/users', function () {
+        return 'Users';
+    });
+});
+
+Route::put('/posts/{post}/status', [PostController::class, 'updateStatus'])->name('posts.updateStatus');

@@ -4,7 +4,7 @@ body {
 }
 
 .navbar-fixed {
-    @apply fixed w-full z-[9999] bg-white shadow-sm shadow-white ease-in-out duration-300;
+    @apply fixed w-full z-[9999] bg-white shadow-md ease-in-out duration-300;
 }
 
 @tailwind components;
@@ -37,6 +37,9 @@ body {
     }
     .gridmaintext {
         @apply text-xs lg:text-sm md:text-xl;
+    }
+    .brand-logo {
+        @apply text-dsr font-bold text-xl md:text-3xl;
     }
 }
 

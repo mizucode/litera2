@@ -14,7 +14,10 @@
             <div class="me-auto place-self-center lg:col-span-7">
                 <h1
                     class="mb-3 text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-4xl">
-                    Selamat Datang <br />
+                    Selamat Datang @if (Auth::check() && Auth::user()->role === 'admin')
+                        <span>Admin</span>
+                    @endif
+                    <br />
                     <p class="text-blue-500">
 
                         {{ auth()->user()->username }}

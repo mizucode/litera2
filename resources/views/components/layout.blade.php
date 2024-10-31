@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full scroll-smooth">
 
 <head>
     <meta charset="UTF-8" />
@@ -28,12 +28,15 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <!-- End Font Awesome -->
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>Halaman {{ $title }}</title>
 </head>
 
 <body class="h-full">
     {{ $slot }}
+
+
 </body>
 
 </html>

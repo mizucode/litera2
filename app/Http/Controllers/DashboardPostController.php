@@ -23,7 +23,7 @@ class DashboardPostController extends Controller
         $category = Category::all();
         return view('pages.dashboard.posts.index', compact('posts', 'category'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -43,11 +43,10 @@ class DashboardPostController extends Controller
             'title' => 'required|max:255',
             'category_id' => 'required|exists:categories,id',
             'slug' => 'required|unique:posts',
-            'image' => 'nullable|image|file|max:1024',
-            'image' =>'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|nullable',
             'body' => 'required',
         ]);
-    
+
         if ($validatedData->fails()) {
             return redirect()->back()->withErrors($validatedData)->withInput();
         }
@@ -63,7 +62,7 @@ class DashboardPostController extends Controller
             'category_id' => $request->category_id,
             'author_id' => Auth::id(),
         ]);
-    
+
         return redirect('/dashboard/posts')->with('success', 'New post has been added!');
     }
 
@@ -80,7 +79,10 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('pages.dashboard.posts.edit', [
+            'post' => $post,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -88,15 +90,45 @@ class DashboardPostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+
+
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'slug' => 'required|unique:posts,slug,' . $post->id, // Unique rule but ignoring the current post
+            'image' => 'nullable|image|file|max:1024|mimes:jpeg,png,jpg,gif,svg', // combined image validation
+            'body' => 'required',
+        ];
+
+        // Validate the request with the updated rules
+        $validatedData = $request->validate($rules);
+
+        // Handle image upload if a new image is uploaded
+        if ($request->file('image')) {
+            // Delete old image if exists
+            if ($post->image) {
+                Storage::delete('public/asset/' . $post->image);
+            }
+
+            // Store the new image
+            $validatedData['image'] = $request->file('image')->hashName();
+            $request->file('image')->storeAs('public/asset', $validatedData['image']);
+        }
+
+        // Update the post with the validated data directly using $post->update()
+        $post->update($validatedData);
+        dd($request->all());
+        // return redirect('/dashboard/posts')->with('success', 'Post has been updated!');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
     }
 
     public function checkSlug(Request $request)

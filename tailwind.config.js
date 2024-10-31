@@ -42,6 +42,7 @@ export default {
                 "putih-dasar": "#F5F5FA",
                 putih: "#ffff",
                 dark: "#131313",
+                dsr: "#1455cd",
             },
         },
     },
